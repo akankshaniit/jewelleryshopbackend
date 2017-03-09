@@ -14,8 +14,8 @@ import junit.framework.Assert;
 
 public class CategoryTestCase {
 	
-	@Autowired
-	private static Category category;
+	
+	private static Category category= new Category();
 	
 	@Autowired
 	private static CategoryDAO categoryDAO;

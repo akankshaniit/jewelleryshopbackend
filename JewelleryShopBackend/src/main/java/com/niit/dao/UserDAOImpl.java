@@ -27,7 +27,7 @@ public class UserDAOImpl implements UserDAO {
 	
 	
 	public List<User> list() {
-	return sessionFactory.getCurrentSession().createQuery("from user").list();	
+	return sessionFactory.getCurrentSession().createQuery("from User").list();	
 	}
 
 	public User getUser(String id) {
@@ -58,8 +58,8 @@ public class UserDAOImpl implements UserDAO {
 		}
 	}
 
-	public boolean validate(String id, String password) {
-		String hql="from User where id='"+id+"' and password='"+password+"'";
+	public boolean validate(String mail, String password) {
+		String hql="from User where mail='"+mail+"' and password='"+password+"'";
 		if(getSession().createQuery(hql).uniqueResult()==null)
 		{
 			return false;

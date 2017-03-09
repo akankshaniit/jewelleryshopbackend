@@ -13,8 +13,11 @@ public class Product {
 private String id;
 @Column(name="name")
 private String name;
+@Column
 private String price;
+@Column
 private String qty;
+@Column
 private String image;
 
 

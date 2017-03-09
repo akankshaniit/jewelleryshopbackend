@@ -4,11 +4,13 @@ import java.util.List;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.niit.model.Category;
 import com.niit.model.Product;
 
-public abstract class ProductDAOImpl implements ProductDAO{
+@Repository
+public class ProductDAOImpl implements ProductDAO{
 
 
 	@Autowired
@@ -21,7 +23,7 @@ public abstract class ProductDAOImpl implements ProductDAO{
 	
 	public List<Product> list() {
 		// TODO Auto-generated method stub
-		return sessionFactory.getCurrentSession().createQuery("from product").list() ;
+		return sessionFactory.openSession().createQuery("from Product").list() ;
 	}
 
 	public boolean save(Product product) {

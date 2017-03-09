@@ -10,7 +10,7 @@ public interface UserDAO {
 	public User getUser(String id);
 	public boolean save(User user);
 	public boolean update(User user);
-	public boolean validate(String id, String password);
+	public boolean validate(String mail, String password);
 	
 
 }

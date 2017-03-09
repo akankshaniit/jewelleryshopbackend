@@ -1,11 +1,25 @@
 package com.niit.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="user")
 public class User {
+	
+	@Id	
 	private String id;
+	@Column(name="name")
 	private String name;
+	@Column
 	private String password;
+	@Column
 	private String mail;
+	@Column
 	private String contact;
+	@Column
 	private String role;
 	
 	public String getId() {

@@ -14,6 +14,7 @@ public class Category {
 	private String id;
 	@Column(name="name")
 	private String name;
+	@Column
 	private String description;
 	
 	public String getId() {
