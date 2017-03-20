@@ -1,6 +1,8 @@
 package com.niit.dao;
 
 import java.util.List;
+
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -9,25 +11,25 @@ import org.springframework.transaction.annotation.Transactional;
 import com.niit.model.Category;
 
 @Transactional
-@Repository("CategoryDAO")
+@Repository
 public class CategoryDAOImpl implements CategoryDAO {
 
 	@Autowired
 	private SessionFactory sessionFactory;
-public CategoryDAOImpl(SessionFactory sessionFactory)
-{
-	this.sessionFactory=sessionFactory;
-}
+    
 		
 	public List<Category> list() {
 		// TODO Auto-generated method stub
-		return sessionFactory.getCurrentSession().createQuery("from Category").list() ;
+		return sessionFactory.openSession().createQuery("from Category").list() ;
 	}
 
 	public boolean save(Category category) {
 		try
 		{
-		sessionFactory.getCurrentSession().save(category);
+				Session session =sessionFactory.openSession();
+				session.save(category);
+				session.flush();
+		
 		return true;
 		} catch(Exception e)
 		{
@@ -39,7 +41,10 @@ public CategoryDAOImpl(SessionFactory sessionFactory)
 
 	public boolean update(Category category) {
 		try {
-			sessionFactory.getCurrentSession().update(category);
+			Session session =sessionFactory.openSession();
+			session.update(category);
+			session.flush();
+	
 			return true;
 		}catch (Exception e)
 		{
@@ -51,7 +56,9 @@ public CategoryDAOImpl(SessionFactory sessionFactory)
 
 	public boolean delete(String id) {
 		try {
-			sessionFactory.getCurrentSession().delete(getCategoryByID(id));
+			Session session =sessionFactory.openSession();
+			session.delete(getCategoryByID(id));
+			session.flush();
 			return true;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -63,7 +70,7 @@ public CategoryDAOImpl(SessionFactory sessionFactory)
 
 	public boolean delete(Category category) {
 		try {
-			sessionFactory.getCurrentSession().delete(category);
+			sessionFactory.openSession().delete(category);
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -76,12 +83,12 @@ public CategoryDAOImpl(SessionFactory sessionFactory)
 		//select * from Category where id ='mobile'
 		//  return	(Category)  sessionFactory.getCurrentSession().get(Category.class, id);
 		  
-		  return  (Category) sessionFactory.getCurrentSession().createQuery("from Category where id = '"+id + "'").uniqueResult();
+		  return  (Category) sessionFactory.openSession().get(Category.class, id);
 			
 	}
 
 	public Category getCategoryByName(String name) {
-		 return  (Category) sessionFactory.getCurrentSession().createQuery("from Category where name = '"+name + "'").list().get(0);
+		 return  (Category) sessionFactory.openSession().createQuery("from Category where name = '"+name + "'").list().get(0);
 			
 
 	}

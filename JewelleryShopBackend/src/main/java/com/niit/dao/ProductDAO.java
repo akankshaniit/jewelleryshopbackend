@@ -33,5 +33,4 @@ public interface ProductDAO {
 		public Product getProductByName(String name);
 
 	
-
 }

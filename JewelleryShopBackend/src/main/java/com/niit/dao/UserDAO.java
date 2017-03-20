@@ -11,6 +11,6 @@ public interface UserDAO {
 	public boolean save(User user);
 	public boolean update(User user);
 	public boolean validate(String mail, String password);
-	
-
+	public User getUserById(String id);
+    public User getUserByMail(String mail);
 }

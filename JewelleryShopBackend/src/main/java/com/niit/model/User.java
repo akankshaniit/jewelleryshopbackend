@@ -2,20 +2,32 @@ package com.niit.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.stereotype.Component;
 
 @Entity
 @Table(name="user")
+@Component
 public class User {
 	
 	@Id	
+	@GeneratedValue(strategy=GenerationType.AUTO) 
 	private String id;
 	@Column(name="name")
 	private String name;
 	@Column
+	@Size(min = 6, max = 15, message = "Your password must between 6 and 15 characters")
 	private String password;
-	@Column
+	@Column(unique=true, nullable=false)
+	@NotEmpty(message="Login UserName With Your Email-Id")
 	private String mail;
 	@Column
 	private String contact;

@@ -1,14 +1,23 @@
 package com.niit.dao;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.niit.model.Category;
 import com.niit.model.Product;
 
+@Transactional
 @Repository
 public class ProductDAOImpl implements ProductDAO{
 
@@ -16,10 +25,6 @@ public class ProductDAOImpl implements ProductDAO{
 	@Autowired
 	private SessionFactory sessionFactory;
 	
-	public ProductDAOImpl(SessionFactory sessionFactory)
-	{
-		this.sessionFactory = sessionFactory;
-	}
 	
 	public List<Product> list() {
 		// TODO Auto-generated method stub
@@ -29,8 +34,10 @@ public class ProductDAOImpl implements ProductDAO{
 	public boolean save(Product product) {
 		try
 		{
-		sessionFactory.getCurrentSession().save(product);
-		return true;
+			Session session =sessionFactory.openSession();
+			session.save(product);
+			session.flush();
+	     return true;
 		} catch(Exception e)
 		{
 			e.printStackTrace(); //it will print the error in the console - similar to SOP
@@ -42,8 +49,11 @@ public class ProductDAOImpl implements ProductDAO{
 	
 	public boolean update(Product product) {
 		try {
-			sessionFactory.getCurrentSession().update(product);
+			Session session =sessionFactory.openSession();
+			session.update(product);
+			session.flush();
 			return true;
+			
 		}catch (Exception e)
 		{
 			e.printStackTrace();
@@ -54,7 +64,9 @@ public class ProductDAOImpl implements ProductDAO{
 
 	public boolean delete(String id) {
 		try {
-			sessionFactory.getCurrentSession().delete(getProductByID(id));
+			Session session =sessionFactory.openSession();
+			session.delete(getProductByID(id));
+			session.flush();
 			return true;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -66,7 +78,7 @@ public class ProductDAOImpl implements ProductDAO{
 
 	public boolean delete(Product product) {
 		try {
-			sessionFactory.getCurrentSession().delete(product);
+			sessionFactory.openSession().delete(product);
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -79,15 +91,43 @@ public class ProductDAOImpl implements ProductDAO{
 		//select * from Category where id ='mobile'
 		//  return	(Category)  sessionFactory.getCurrentSession().get(Category.class, id);
 		  
-		  return  (Product) sessionFactory.getCurrentSession().createQuery("from Product where id = '"+id + "'").uniqueResult();
-			
+		 return  (Product) sessionFactory.openSession().get(Product.class, id);
 	}
 
 	public Product getProductByName(String name) {
-		 return  (Product) sessionFactory.getCurrentSession().createQuery("from Product where name = '"+name + "'").list().get(0);
+		 return  (Product) sessionFactory.openSession().createQuery("from Product where name = '"+name + "'").list().get(0);
 			
 
 	}
 	
+	@SuppressWarnings("deprecation")
+	public void storeFile(Product product, HttpServletRequest request)
+	{
+		System.out.println(request.getRealPath("/"));
+		 String path=request.getRealPath("/")+"resources\\images\\"+product.getCategory()+"\\"+product.getImage();
+		 System.out.println(path);
+		MultipartFile file= product.getFile();
 	
+		if (!file.isEmpty()) {
+			
+		try{
+		byte[] bytes =file.getBytes();
+		System.out.println(file.getOriginalFilename());
+		
+		
+		File serverFile = new File(path);
+		serverFile.createNewFile();
+	
+		BufferedOutputStream stream = new BufferedOutputStream(
+				new FileOutputStream(serverFile));
+		stream.write(bytes);
+		stream.close();
+		}
+		catch(Exception ex)
+		{
+			System.out.println(ex);
+		}
+			
+	}
+	}	
 }

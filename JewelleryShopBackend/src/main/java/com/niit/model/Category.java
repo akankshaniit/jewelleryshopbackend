@@ -4,6 +4,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Table(name="Category")
@@ -11,10 +15,13 @@ public class Category {
 
 	
 	@Id
+	@NotBlank
 	private String id;
 	@Column(name="name")
+	@Size(min=3)
 	private String name;
 	@Column
+	@NotBlank
 	private String description;
 	
 	public String getId() {

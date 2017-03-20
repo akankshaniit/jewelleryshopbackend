@@ -1,22 +1,38 @@
 package com.niit.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotBlank;
+
+@Entity
+@Table(name="supplier")
 public class Supplier {
 	
+	@Id
+	@NotBlank
 	private String id;
+	@Column(name="name")
+	@Size(min=3)
 	private String name;
-	private String description;
+	@Column
+	@NotBlank
+	private String address;
 	
 	public String getId() {
 		return id;
 	}
-	public String getDescription() {
-		return description;
+	public String getAddress() {
+		return address;
 	}
 	public String getName() {
 		return name;
 	}
-	public void setDescription(String description) {
-		this.description = description;
+	public void setAddress(String address) {
+		this.address = address;
 	}
 	public void setId(String id) {
 		this.id = id;

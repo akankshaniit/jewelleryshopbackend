@@ -11,9 +11,9 @@ import org.springframework.stereotype.Repository;
 
 import com.niit.model.User;
 
-@Repository("userDAO")
-@Transactional
 
+@Transactional
+@Repository
 public class UserDAOImpl implements UserDAO {
 
 	@Autowired
@@ -27,18 +27,20 @@ public class UserDAOImpl implements UserDAO {
 	
 	
 	public List<User> list() {
-	return sessionFactory.getCurrentSession().createQuery("from User").list();	
+	return sessionFactory.openSession().createQuery("from User").list();	
 	}
 
 	public User getUser(String id) {
-		return (User) sessionFactory.getCurrentSession().get(User.class, id);
+		return (User) sessionFactory.openSession().get(User.class, id);
 	}
 
 	public boolean save(User user) {
 		try
 		{
-			getSession().save(user);
-			return true;
+			Session session =sessionFactory.openSession();
+			session.save(user);
+			session.flush();
+				return true;
 		}catch(Exception e)
 		{
 			e.printStackTrace();
@@ -49,7 +51,10 @@ public class UserDAOImpl implements UserDAO {
 	public boolean update(User user) {
 		try
 		{
-			getSession().update(user);
+			Session session =sessionFactory.openSession();
+			session.save(user);
+			session.flush();
+	
 			return true;
 		}catch(Exception e)
 		{
@@ -58,13 +63,27 @@ public class UserDAOImpl implements UserDAO {
 		}
 	}
 
+	@SuppressWarnings({ "deprecation"})
+	
 	public boolean validate(String mail, String password) {
 		String hql="from User where mail='"+mail+"' and password='"+password+"'";
-		if(getSession().createQuery(hql).uniqueResult()==null)
+		if(sessionFactory.openSession().createQuery(hql).uniqueResult()==null)
 		{
 			return false;
 		}
 		return true;
+	}
+
+
+	@Override
+	public User getUserById(String id) {
+		return (User) sessionFactory.getCurrentSession().get(User.class,id);
+	}
+
+
+	@Override
+	public User getUserByMail(String mail) {
+		return (User) sessionFactory.getCurrentSession().get(User.class,mail);
 	}
 	
 

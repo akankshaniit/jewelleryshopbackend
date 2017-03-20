@@ -5,10 +5,16 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.niit.model.Category;
+import com.niit.model.Product;
 import com.niit.model.Supplier;
 import com.niit.model.User;
 
+@Transactional
+@Repository("supplierDAO")
 public class SupplierDAOImpl implements SupplierDAO {
 	
 	@Autowired
@@ -23,18 +29,22 @@ public class SupplierDAOImpl implements SupplierDAO {
 
 	public List<Supplier> list() {
 		
-		 return sessionFactory.getCurrentSession().createQuery("from supplier").list();	
+		return sessionFactory.openSession().createQuery("from Supplier").list() ;
 	}
 
-	public Supplier getSupplier(String id) {
-		return (Supplier) sessionFactory.getCurrentSession().get(Supplier.class, id);
+	public Supplier getSupplierByID(String id) {
+		return  (Supplier) sessionFactory.openSession().get(Supplier.class, id);
+		
 	}
 
 	public boolean save(Supplier supplier) {
 		try
 		{
-			getSession().save(supplier);
-			return true;
+			Session session =sessionFactory.openSession();
+			session.save(supplier);
+			session.flush();
+	
+	return true;
 		}catch(Exception e)
 		{
 			e.printStackTrace();
@@ -44,7 +54,10 @@ public class SupplierDAOImpl implements SupplierDAO {
 
 	public boolean update(Supplier supplier) {
 		try {
-			sessionFactory.getCurrentSession().update(supplier);
+			Session session =sessionFactory.openSession();
+			session.update(supplier);
+			session.flush();
+	
 			return true;
 		}catch (Exception e)
 		{
@@ -57,7 +70,7 @@ public class SupplierDAOImpl implements SupplierDAO {
 
 	public boolean delete(Supplier supplier) {
 		try {
-			sessionFactory.getCurrentSession().delete(supplier);
+			sessionFactory.openSession().delete(supplier);
 			return true;
 		}catch (Exception e)
 		{
@@ -66,5 +79,22 @@ public class SupplierDAOImpl implements SupplierDAO {
 			
 		}	
 	}
+
+
+	@Override
+	public boolean delete(String id)
+	{
+	try {
+		Session session =sessionFactory.openSession();
+		session.delete(getSupplierByID(id));
+		session.flush();
+		return true;
+	} catch (Exception e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+		return false;
+	}
+	
+}
 
 }
