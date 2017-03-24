@@ -104,7 +104,7 @@ public class ProductDAOImpl implements ProductDAO{
 	public void storeFile(Product product, HttpServletRequest request)
 	{
 		System.out.println(request.getRealPath("/"));
-		 String path=request.getRealPath("/")+"resources\\images\\"+product.getCategory()+"\\"+product.getImage();
+		 String path=request.getRealPath("/")+"WEB-INF\\resources\\images\\"+product.getImage();
 		 System.out.println(path);
 		MultipartFile file= product.getFile();
 	

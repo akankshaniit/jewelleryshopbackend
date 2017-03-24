@@ -18,13 +18,13 @@ public class MyCart {
 	private int id;
 	@Column
 	@NotEmpty
-	private String user_id;
+	private String userid;
 	@Column
 	@NotEmpty
 	private String product_name;
 	@Column
 	@NotEmpty
-	private int price;
+	private double price;
 	@Column
 	@NotEmpty
 	private char status;
@@ -40,11 +40,11 @@ public class MyCart {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getUser_id() {
-		return user_id;
+	public String getUserid() {
+		return userid;
 	}
-	public void setUser_id(String user_id) {
-		this.user_id = user_id;
+	public void setUserid(String userid) {
+		this.userid = userid;
 	}
 	public String getProduct_name() {
 		return product_name;
@@ -52,10 +52,10 @@ public class MyCart {
 	public void setProduct_name(String product_name) {
 		this.product_name = product_name;
 	}
-	public int getPrice() {
+	public double getPrice() {
 		return price;
 	}
-	public void setPrice(int price) {
+	public void setPrice(double price) {
 		this.price = price;
 	}
 	public char getStatus() {

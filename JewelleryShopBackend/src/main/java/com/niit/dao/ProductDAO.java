@@ -3,6 +3,8 @@ package com.niit.dao;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.niit.model.Category;
 import com.niit.model.Product;
 
@@ -32,5 +34,6 @@ public interface ProductDAO {
 		// get category by name
 		public Product getProductByName(String name);
 
+		public void storeFile(Product product, HttpServletRequest request);
 	
 }

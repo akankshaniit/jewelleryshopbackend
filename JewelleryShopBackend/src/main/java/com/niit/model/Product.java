@@ -1,18 +1,18 @@
 package com.niit.model;
 
-
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.NotEmpty;
+
 import org.springframework.web.multipart.MultipartFile;
 
-import com.sun.istack.internal.NotNull;
 
 @Entity
 @Table(name="product")
@@ -22,17 +22,16 @@ public class Product {
 @NotBlank
 private String id;
 @Column(name="name")
-@NotEmpty
+@NotBlank
 private String name;
-
-
-
 @Column
-@NotEmpty
-private String price;
+String categoryId;
 @Column
-@NotEmpty
-private String qty;
+@Min(value=100)
+private double price;
+@Column
+@Min(value=1)
+private int qty;
 @Column(name="image")
 private String image;
 @NotNull
@@ -50,10 +49,10 @@ public String getImage() {
 public String getName() {
 	return name;
 }
-public String getPrice() {
+public double getPrice() {
 	return price;
 }
-public String getQty() {
+public int getQty() {
 	return qty;
 }
 public void setId(String id) {
@@ -65,10 +64,10 @@ public void setImage(String image) {
 public void setName(String name) {
 	this.name = name;
 }
-public void setPrice(String price) {
+public void setPrice(double price) {
 	this.price = price;
 }
-public void setQty(String qty) {
+public void setQty(int qty) {
 	this.qty = qty;
 }
 public MultipartFile getFile() {
@@ -76,6 +75,13 @@ public MultipartFile getFile() {
 }
 public void setFile(MultipartFile file) {
 	this.file = file;
+}
+public String getCategoryId() {
+	return categoryId;
+}
+
+public void setCategoryId(String categoryId) {
+	this.categoryId = categoryId;
 }
 
 }
