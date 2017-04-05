@@ -52,7 +52,7 @@ public class UserDAOImpl implements UserDAO {
 		try
 		{
 			Session session =sessionFactory.openSession();
-			session.save(user);
+			session.update(user);
 			session.flush();
 	
 			return true;
@@ -77,13 +77,13 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public User getUserById(String id) {
-		return (User) sessionFactory.getCurrentSession().get(User.class,id);
+		return (User) sessionFactory.openSession().get(User.class,id);
 	}
 
 
 	@Override
 	public User getUserByMail(String mail) {
-		return (User) sessionFactory.getCurrentSession().get(User.class,mail);
+		return (User) sessionFactory.openSession().createQuery("from User where mail='"+mail+"'").uniqueResult();
 	}
 	
 

@@ -1,5 +1,7 @@
 package com.niit.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,7 +15,7 @@ import org.springframework.stereotype.Component;
 @Entity
 @Table(name="contact")
 @Component
-public class Contact {
+public class Contact implements Serializable {
 	    
 	    @Id	
 	    @GeneratedValue

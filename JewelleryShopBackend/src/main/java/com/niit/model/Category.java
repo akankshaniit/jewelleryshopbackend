@@ -1,5 +1,7 @@
 package com.niit.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -11,7 +13,7 @@ import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Table(name="Category")
-public class Category {
+public class Category implements Serializable {
 
 	
 	@Id

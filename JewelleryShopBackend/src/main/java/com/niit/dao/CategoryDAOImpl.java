@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.niit.model.Category;
+import com.niit.model.Supplier;
 
 @Transactional
 @Repository
@@ -19,8 +20,10 @@ public class CategoryDAOImpl implements CategoryDAO {
     
 		
 	public List<Category> list() {
-		// TODO Auto-generated method stub
-		return sessionFactory.openSession().createQuery("from Category").list() ;
+		Session session=sessionFactory.openSession();
+		List<Category> list=	session.createQuery("from Category").list() ;
+		session.close();
+		return list;
 	}
 
 	public boolean save(Category category) {
@@ -44,7 +47,7 @@ public class CategoryDAOImpl implements CategoryDAO {
 			Session session =sessionFactory.openSession();
 			session.update(category);
 			session.flush();
-	
+			session.close();
 			return true;
 		}catch (Exception e)
 		{
@@ -59,6 +62,7 @@ public class CategoryDAOImpl implements CategoryDAO {
 			Session session =sessionFactory.openSession();
 			session.delete(getCategoryByID(id));
 			session.flush();
+			session.close();
 			return true;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

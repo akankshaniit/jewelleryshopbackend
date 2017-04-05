@@ -1,5 +1,7 @@
 package com.niit.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -16,7 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 @Table(name="product")
-public class Product {
+public class Product implements Serializable{
 	
 @Id	
 @NotBlank

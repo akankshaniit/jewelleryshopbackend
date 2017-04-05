@@ -27,8 +27,10 @@ public class ProductDAOImpl implements ProductDAO{
 	
 	
 	public List<Product> list() {
-		// TODO Auto-generated method stub
-		return sessionFactory.openSession().createQuery("from Product").list() ;
+		Session session=sessionFactory.openSession();
+		List<Product> list=	session.createQuery("from Product").list() ;
+		session.close();
+		return list;
 	}
 
 	public boolean save(Product product) {
@@ -52,6 +54,7 @@ public class ProductDAOImpl implements ProductDAO{
 			Session session =sessionFactory.openSession();
 			session.update(product);
 			session.flush();
+			session.close();
 			return true;
 			
 		}catch (Exception e)
@@ -67,6 +70,7 @@ public class ProductDAOImpl implements ProductDAO{
 			Session session =sessionFactory.openSession();
 			session.delete(getProductByID(id));
 			session.flush();
+			session.close();
 			return true;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

@@ -29,7 +29,10 @@ public class SupplierDAOImpl implements SupplierDAO {
 
 	public List<Supplier> list() {
 		
-		return sessionFactory.openSession().createQuery("from Supplier").list() ;
+		Session session=sessionFactory.openSession();
+	List<Supplier> list=	session.createQuery("from Supplier").list() ;
+	session.close();
+	return list;
 	}
 
 	public Supplier getSupplierByID(String id) {
@@ -57,7 +60,7 @@ public class SupplierDAOImpl implements SupplierDAO {
 			Session session =sessionFactory.openSession();
 			session.update(supplier);
 			session.flush();
-	
+	session.close();
 			return true;
 		}catch (Exception e)
 		{
@@ -88,6 +91,7 @@ public class SupplierDAOImpl implements SupplierDAO {
 		Session session =sessionFactory.openSession();
 		session.delete(getSupplierByID(id));
 		session.flush();
+		session.close();
 		return true;
 	} catch (Exception e) {
 		// TODO Auto-generated catch block

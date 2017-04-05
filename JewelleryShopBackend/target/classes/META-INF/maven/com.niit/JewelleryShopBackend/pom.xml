@@ -7,6 +7,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   <artifactId>JewelleryShopBackend</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
+  
   <name>JewelleryShopBackend</name>
   <url>http://maven.apache.org</url>
 

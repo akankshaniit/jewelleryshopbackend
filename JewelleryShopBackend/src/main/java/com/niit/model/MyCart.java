@@ -1,50 +1,53 @@
 package com.niit.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-@Table(name="mycart")
+@Table(name="cart")
 public class MyCart {
 
 	@Id
-	@GeneratedValue
 	private int id;
 	@Column
-	@NotEmpty
-	private String userid;
+	@NotNull
+	private String user_name;
 	@Column
-	@NotEmpty
+	@NotNull
 	private String product_name;
 	@Column
-	@NotEmpty
+	@NotNull
 	private double price;
 	@Column
-	@NotEmpty
+	@NotNull
 	private char status;
 	@Column
-	@NotEmpty
+	@NotNull
 	private int quantity;
 	@Column
 	@DateTimeFormat
-	private int date_added;
+	private Date date_added;
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getUserid() {
-		return userid;
+	public String getUser_name() {
+		return user_name;
 	}
-	public void setUserid(String userid) {
-		this.userid = userid;
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
 	}
 	public String getProduct_name() {
 		return product_name;
@@ -70,11 +73,11 @@ public class MyCart {
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
-	public int getDate_added() {
+	public Date getDate_added() {
 		return date_added;
 	}
-	public void setDate_added(int date_added) {
-		this.date_added = date_added;
+	public void setDate_added(Date date) {
+		this.date_added = date;
 	} 
 	
 	
