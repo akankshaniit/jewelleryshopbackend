@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,7 @@ public class ProductDAOImpl implements ProductDAO{
 		{
 			Session session =sessionFactory.openSession();
 			session.save(product);
+			session.close();
 			session.flush();
 	     return true;
 		} catch(Exception e)
@@ -133,5 +135,13 @@ public class ProductDAOImpl implements ProductDAO{
 		}
 			
 	}
+	}
+
+	@Override
+	public List<Product> Search(String prdName) {
+		String hql = "from Product where name like '%"+prdName+"%'";
+		Query query = sessionFactory.openSession().createQuery(hql);
+		
+		return query.list();
 	}	
 }

@@ -25,6 +25,7 @@ public class MyCartDAOImpl implements MyCartDAO {
 	
 	@Autowired
 	private SessionFactory sessionFactory;
+	
 
 	public MyCartDAOImpl() {
 
@@ -41,6 +42,7 @@ public class MyCartDAOImpl implements MyCartDAO {
 		String hql = "from MyCart where user_name=" + "'" + userID + "'  and status = " + "'N'";
 		Query query = sessionFactory.openSession().createQuery(hql);
 		log.debug("Ending of the method list");
+	
 		return query.list();
 
 	}
@@ -53,7 +55,7 @@ public class MyCartDAOImpl implements MyCartDAO {
 		Session session =sessionFactory.openSession();
 		session.save(mycart);
 		session.flush();
-		
+		session.close();
 	//	sessionFactory.openSession().save(mycart);
 		log.debug("Ending of the method save");
 	}

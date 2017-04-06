@@ -35,5 +35,7 @@ public interface ProductDAO {
 		public Product getProductByName(String name);
 
 		public void storeFile(Product product, HttpServletRequest request);
+		
+		public List<Product> Search(String prdName);
 	
 }
