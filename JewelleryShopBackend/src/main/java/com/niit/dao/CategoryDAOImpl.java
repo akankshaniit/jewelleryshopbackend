@@ -21,7 +21,7 @@ public class CategoryDAOImpl implements CategoryDAO {
 		
 	public List<Category> list() {
 		Session session=sessionFactory.openSession();
-		List<Category> list=	session.createQuery("from Category").list() ;
+		List<Category> list=session.createQuery("from Category").list() ;
 		session.close();
 		return list;
 	}
