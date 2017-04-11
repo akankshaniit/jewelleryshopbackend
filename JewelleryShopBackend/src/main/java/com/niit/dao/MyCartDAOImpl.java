@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.niit.model.Category;
 import com.niit.model.MyCart;
+import com.niit.model.Shipping;
 
 @Transactional
 @Repository
@@ -133,6 +134,31 @@ public class MyCartDAOImpl implements MyCartDAO {
 	public MyCart getCartByID(int id) {
 		 return   (MyCart) sessionFactory.openSession().get(MyCart.class, id);
 			
+	}
+
+	public boolean deletebyId(String username) {
+		try{
+		Session session =sessionFactory.openSession();
+		List<MyCart>mlt = (List)session.createQuery("from MyCart where user_name='"+username+"'").list();
+		if(!mlt.isEmpty())
+		{
+			for(MyCart mt : mlt){
+				
+						session.delete(mt);
+						session.flush();
+			}
+		}
+		
+		
+		return true;
+		
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			return false;
+			
+		}
+		
 	}
 
 	

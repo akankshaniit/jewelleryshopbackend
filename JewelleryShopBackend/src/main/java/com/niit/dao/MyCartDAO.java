@@ -13,6 +13,9 @@ public interface MyCartDAO {
 	public void save(MyCart mycart);
 	public boolean delete(MyCart mycart );
 	public boolean delete(int id);
+	
+	public boolean deletebyId(String username);
+	
 	public MyCart getCartByID(int id);
 	public double getTotalAmount(String UserId);
 	public int getMaxId();

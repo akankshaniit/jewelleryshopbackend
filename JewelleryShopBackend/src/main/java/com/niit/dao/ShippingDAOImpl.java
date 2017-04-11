@@ -29,6 +29,11 @@ public class ShippingDAOImpl implements ShippingDAO {
 		try
 		{
 				Session session =sessionFactory.openSession();
+				Shipping s = (Shipping)session.createQuery("from Shipping where username='"+shipping.getUsername()+"'").uniqueResult();
+				if(s!=null){
+				session.delete(s);
+				session.flush();
+				}
 				session.save(shipping);
 				
 				session.flush();
