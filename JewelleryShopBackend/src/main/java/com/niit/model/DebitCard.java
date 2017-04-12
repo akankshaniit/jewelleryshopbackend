@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.Size;
 
 import org.springframework.stereotype.Component;
 
@@ -24,14 +25,17 @@ public class DebitCard implements Serializable  {
 	@Column(name="userid")
 	private String username;
 	@Column
+	@Size(max=16)
 	private int cardno;
 	@Column
 	private String expmonth;
 	@Column
 	private int expyear;
 	@Transient
+	@Size(min=3)
 	private String cvv;
 	@Transient
+	@Size(min=4)
 	private String atmpin;
 	
 	@Column
